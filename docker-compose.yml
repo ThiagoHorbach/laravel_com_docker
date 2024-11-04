@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        PHP_EXTENSIONS: "xdebug"
+    container_name: laravel_app_new_project
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    networks:
+      - laravel_network
+    ports:
+      - "9001:9001"  # Porta alterada para evitar conflito
+
+  webserver:
+    image: nginx:alpine
+    container_name: nginx_webserver_new_project
+    restart: unless-stopped
+    ports:
+      - "8082:80"  # Porta alterada para evitar conflito com outro projeto
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+    networks:
+      - laravel_network
+    depends_on:
+      - app
+
+  db:
+    image: mysql:5.7
+    container_name: mysql_db_new_project
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: laravel_new_project  # Nome do banco de dados exclusivo
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: secret
+    volumes:
+      - mysql_data_new_project:/var/lib/mysql  # Volume exclusivo para evitar conflitos de dados
+    networks:
+      - laravel_network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin_new_project
+    restart: unless-stopped
+    ports:
+      - "8083:80"  # Porta alterada para acessar phpMyAdmin deste projeto
+    environment:
+      PMA_HOST: db
+      PMA_USER: laravel
+      PMA_PASSWORD: secret
+    networks:
+      - laravel_network
+
+networks:
+  laravel_network:
+
+volumes:
+  mysql_data_new_project:

@@ -1,0 +1,36 @@
+PASSO 1 PARA CRIAR O PROJETO LARAVEL:
+
+criei a pasta e abri o terminal, rodei o comando abaixo:
+    composer create-project laravel/laravel laravel-com-docker
+
+isso fez com que criasse o projeto laravel na pasta laravel-com-docker.
+
+depois disso, acesso a pasta laravel-com-docker
+    cd laravel-com-docker
+
+Instalo as dependências:
+    npm install
+
+Compilo os arquivos de front    
+    npm run dev
+
+com isso, o laravel vai estar funcionando sem o docker, agora vamos ao docker:
+
+PASSO 2, CRIAR O DOCKER DO PROJETO E CONFIGURÁ-LO
+
+Crio o dockerfile que coloquei na pasta do projeto
+Crio o docker-compose.yml que também ja coloquei na pasta do projeto
+
+depois rode o projeto criando o container:
+    docker-compose up -d --build
+
+vá até docker/nginx/conf.d e crie o arquivo default.conf como o que criei
+
+para acessar os locais do arquivo no docker digita isso no terminal:
+    docker exec -it laravel_app_new_project bash
+Para sair é só digitar
+    exit
+
+Exemplo de criação de uma controller com artisan
+    php artisan make:controller ProductsController --resource
+
