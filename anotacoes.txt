@@ -11,6 +11,8 @@ depois disso, acesso a pasta laravel-com-docker
 Instalo as dependências:
     npm install
 
+
+
 Compilo os arquivos de front    
     npm run dev
 
@@ -24,7 +26,15 @@ Crio o docker-compose.yml que também ja coloquei na pasta do projeto
 depois rode o projeto criando o container:
     docker-compose up -d --build
 
+no navegador acesse:
+    localhost:8082
+
+(Se estiver com erro de não ter a pasta vendor, acesse a pasta do projeto com o docker exec ali de baixo e rode este comando "composer install")
+
 vá até docker/nginx/conf.d e crie o arquivo default.conf como o que criei
+
+como não tinha o .env neste, criei e depois acessei a pasta com o código abaixo e rodei isso:
+    php artisan key:generate
 
 para acessar os locais do arquivo no docker digita isso no terminal:
     docker exec -it laravel_app_new_project bash

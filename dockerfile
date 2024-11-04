@@ -1,6 +1,12 @@
 # Usando imagem oficial do PHP
 FROM php:8.1-fpm
 
+# Instala o Node.js e o npm
+RUN apt-get update && \
+    apt-get install -y curl && \
+    curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
+    apt-get install -y nodejs
+
 # Instala dependências necessárias
 RUN apt-get update && apt-get install -y \
     build-essential \
@@ -38,6 +44,9 @@ COPY . .
 
 # Dá permissão à pasta storage e bootstrap
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+
+# Instala as dependências do npm
+RUN npm install
 
 # Expõe a porta 9001 para evitar conflito com o outro projeto
 EXPOSE 9001
