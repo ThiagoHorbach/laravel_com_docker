@@ -19,7 +19,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get("/teste/{teste}", [ExampleController::class, "testeLaravel"]);
 
 Route::get("/cadastrar-produto", [ProductsController::class, "create"]);
+Route::post("/salvar-produto", [ProductsController::class, "store"])->name("products.store");
 
-Route::get("/teste/{teste}", [ExampleController::class, "testeLaravel"]);

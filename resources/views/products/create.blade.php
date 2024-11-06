@@ -14,7 +14,8 @@
     <h1>Cadastro de produto</h1>
 
     <div class="container">
-        <form>
+        <form action="{{ route("products.store") }}" method="POST">
+            @csrf
             <div class="form-group">
                 <label for="exampleInputEmail1">Nome do produto</label>
                 <input type="text" class="form-control" name="product_name">

@@ -27,7 +27,9 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        //echo $data["product_name"];
+        dd($data);
     }
 
     /**
