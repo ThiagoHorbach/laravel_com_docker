@@ -44,3 +44,22 @@ Para sair é só digitar
 Exemplo de criação de uma controller com artisan
     php artisan make:controller ProductsController --resource
 
+Exemplo de criação de arquivo request:
+    php artisan make:request StoreOrUpdateProductsRequest
+
+Para ver as rotas disponíveis, pode usar o comando
+    php artisan route:list
+
+Para criar migrations(parte para banco de dados)
+    php artisan make:migration products
+Depois de ter criado as migrations, para rodar:
+    php artisan migrate
+
+Caso queira reverter uma migration:
+    php artisan migrate:rollback
+
+Caso queira ver o status das migrations:
+    php artisan migrate:status
+
+dropar todo o banco e criar novamente(normalmente não usar):
+    php artisan migrate:fresh
