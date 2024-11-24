@@ -50,6 +50,8 @@ Exemplo de criação de arquivo request:
 Para ver as rotas disponíveis, pode usar o comando
     php artisan route:list
 
+MIGRATE
+
 Para criar migrations(parte para banco de dados)
     php artisan make:migration products
 Depois de ter criado as migrations, para rodar:
@@ -63,3 +65,52 @@ Caso queira ver o status das migrations:
 
 dropar todo o banco e criar novamente(normalmente não usar):
     php artisan migrate:fresh
+
+Alteração de migration:
+     php artisan make:migration add_stock_info_products_table --table=products
+Depois das alterações adicionadas no arquivo, só rodar os migrate:
+    php artisan migrate
+
+se der o erro de faltar doctrine DBAL, roda dentro do docker como o php artisan por exemplo:
+    composer require doctrine/dbal
+
+MODEL:
+
+para criar uma MODEL:
+    php artisan make:model Products
+
+
+VIEWS:
+
+um modelo gratis de ambiente administrativo no laravel é o adminLTE 3
+está no git: https://github.com/jeroennoten/Laravel-AdminLTE?tab=readme-ov-file
+o passo a passo ta aqui: https://github.com/jeroennoten/Laravel-AdminLTE/wiki/Installation
+
+php artisan make:component statusBadge
+
+SISTEMA DE AUTENTICAÇÂO:
+
+usar o laravel breeze que fica inclusive na documentação do proprio laravel
+utilizar o comando:
+    composer require laravel/breeze --dev
+Instalar o breeze:
+    php artisan breeze:install
+        defina blade, não e phpunit
+    roda o  npm install
+    depois roda npm run dev
+
+    VIEW DE AUTENTICAÇÃO DO LTE
+        roda
+            composer require laravel/ui
+            php artisan ui bootstrap --auth
+            php artisan adminlte:install --only=auth_views
+
+criacao de APIs:
+    php artisan make:controller ApiProductsController --resource
+
+    as rotas não usam o arquivo web.php, mas sim o arquivo api.php
+
+
+COMO FAZER O DEPLOY DE UM PROJETO LARAVEL:
+    usar a ferramenta forge:
+        forge.laravel.com/connect

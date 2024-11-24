@@ -18,6 +18,9 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->integer('status')->requred()->default(0);            
             $table->timestamps();
+
+            $table->index("name");
+            $table->index("sku");
         });
     }
 

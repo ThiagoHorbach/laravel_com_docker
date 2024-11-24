@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreOrUpdateProductsRequest;
+use App\Models\Products;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
@@ -12,24 +13,41 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products = [
-            0 => [
-                "product_name" => "Produto 1",
-                "sku" => "123",
-                "description" => "exemplo de descrição"
-            ],
-            1 => [
-                "product_name" => "Produto 2",
-                "sku" => "456",
-                "description" => "exemplo de descrição"
-            ],
-            2 => [
-                "product_name" => "Produto 3",
-                "sku" => "789",
-                "description" => "exemplo de descrição"
-            ]
-        ];
+        // $products = [
+        //     0 => [
+        //         "product_name" => "Produto 1",
+        //         "sku" => "123",
+        //         "description" => "exemplo de descrição"
+        //     ],
+        //     1 => [
+        //         "product_name" => "Produto 2",
+        //         "sku" => "456",
+        //         "description" => "exemplo de descrição"
+        //     ],
+        //     2 => [
+        //         "product_name" => "Produto 3",
+        //         "sku" => "789",
+        //         "description" => "exemplo de descrição"
+        //     ]
+        // ];
 
+        //$products = Products::select("id", "name")->get()->all();
+        //$products = Products::select("id", "name")->get()->where("id", "=", 1)->all();
+        // $products = Products::join("brands", "products.brand_id", "=", "brands.id")
+        // ->select(
+        //     "products.id",
+        //     "products.name",
+        //     "sku",
+        //     "brand_id",
+        //     "brands.name as brand_name"
+        // )
+        // ->get();
+        $products = Products::get();
+
+        //dd($products);
+
+        //echo "<pre>", print_r(json_decode($products)), '</pre>';die;
+        
         return view("products.index", ["products" => $products]);
         // return redirect()->route("products.create");
 
@@ -93,28 +111,31 @@ class ProductsController extends Controller
      */
     public function edit(string $id)
     {
-        $products = [
-            0 => [
-                "id" => 0,
-                "product_name" => "Produto 1",
-                "sku" => "123",
-                "description" => "exemplo de descrição"
-            ],
-            1 => [
-                "id" => 1,
-                "product_name" => "Produto 2",
-                "sku" => "456",
-                "description" => "exemplo de descrição"
-            ],
-            2 => [
-                "id" => 2,
-                "product_name" => "Produto 3",
-                "sku" => "789",
-                "description" => "exemplo de descrição"
-            ]
-        ];
+        // $products = [
+        //     0 => [
+        //         "id" => 0,
+        //         "product_name" => "Produto 1",
+        //         "sku" => "123",
+        //         "description" => "exemplo de descrição"
+        //     ],
+        //     1 => [
+        //         "id" => 1,
+        //         "product_name" => "Produto 2",
+        //         "sku" => "456",
+        //         "description" => "exemplo de descrição"
+        //     ],
+        //     2 => [
+        //         "id" => 2,
+        //         "product_name" => "Produto 3",
+        //         "sku" => "789",
+        //         "description" => "exemplo de descrição"
+        //     ]
+        // ];
 
-        return view("products.edit", ["product" => $products[$id]]);
+        $product = Products::find($id);
+
+        return view("products.edit", ["product" => $product]);
+        //return view("products.edit", ["product" => $products[$id]]);
     }
 
     /**
@@ -122,7 +143,13 @@ class ProductsController extends Controller
      */
     public function update(StoreOrUpdateProductsRequest $request, string $id)
     {
-        dd($request->all());
+        $product = Products::where("id", $id)->update([
+            "name"=>$request->name,
+            "sku"=>$request->sku,
+            "description"=>$request->description,
+        ]);
+        dd($product);
+        //dd($request->all());
     }
 
     /**
@@ -130,6 +157,7 @@ class ProductsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Products::where("id", $id)->delete();
+        return "registro deletado com sucesso!";
     }
 }

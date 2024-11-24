@@ -22,14 +22,14 @@ class StoreOrUpdateProductsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "product_name" => "string|required|min:3|max:100",
+            "name" => "string|required|min:3|max:100",
             "sku" => "integer"
         ];
     }
 
     public function messages(){
         return [
-        "product_name.required" => "O campo Nome do Produto é obrigatório",
+        "name.required" => "O campo Nome do Produto é obrigatório",
         "sku.integer" => "O campo código aceita somente números"
         ];
     }
